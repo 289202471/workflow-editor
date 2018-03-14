@@ -7,7 +7,7 @@
     color: black;
     position: relative;
     font-size: 11px;
-    border: 1px solid #ccc;
+    /* border: 1px solid #ccc; */
 }
 
 .workflow-editor .svg-container-top {
