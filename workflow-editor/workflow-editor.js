@@ -1297,6 +1297,10 @@
             //节点切换事件
             function nodeToggle() {
                 var prevNode, currNode;
+                //no path
+                if (!path) {
+                    return;
+                }
                 path.attr({
                     "stroke-width": config.path.attr["stroke-width-active"]
                 });
@@ -1712,8 +1716,10 @@
                             x = resizeMoveOpt.rectPostion.x;
                             y = resizeMoveOpt.rectPostion.y;
                         } else {
-                            x = startRect.attr("x");
-                            y = startRect.attr("y");
+                            if (startRect) {
+                                x = startRect.attr("x");
+                                y = startRect.attr("y");
+                            }
                         }
 
                         if (drawLineType === "brokenHLine") {
@@ -1738,6 +1744,11 @@
                         if (isModdrawline() === true) {
                             return;
                         }
+                        //no path
+                        if (!path) {
+                            return;
+                        }
+
                         path.attr({
                             "opacity": 1
                         });
@@ -1873,11 +1884,8 @@
                                 if (path.fromDot && !path.toDot) {
 
                                     fromDot = flowProps.rect[path.fromDot].node;
-                                    x = Math.abs(startNodeCenter.x - fromDot.getCenter().x);
                                     y = Math.abs(startNodeCenter.y - fromDot.getCenter().y);
-                                    y = y / 1.7;
-                                    //x = x;
-                                    firstLineWidth = Math.abs(y - x);
+                                    firstLineWidth = Math.abs(firstLineWidth + y / 10);
                                     firstLineWidth = firstLineWidth > defaultFirstLineWidth ? firstLineWidth : defaultFirstLineWidth;
                                     //console.log(["y:", y, "x:", x, "lineWidth:", y - x].join(" "));
                                 }
@@ -1914,15 +1922,13 @@
 
                                 firstLineWidth = defaultFirstLineWidth;
                                 if (path.fromDot && !path.toDot) {
-
                                     fromDot = flowProps.rect[path.fromDot].node;
                                     x = Math.abs(startNodeCenter.x - fromDot.getCenter().x);
-                                    y = Math.abs(startNodeCenter.y - fromDot.getCenter().y);
-                                    //y = y;
-                                    x = x / 2.5;
-                                    firstLineWidth = Math.abs(x - y);
+
+                                    firstLineWidth = Math.abs(firstLineWidth + x / 10);
                                     firstLineWidth = firstLineWidth > defaultFirstLineWidth ? firstLineWidth : defaultFirstLineWidth;
-                                    //console.log(["y:", y, "x:", x, "lineWidth:", y - x].join(" "));
+                                    console.log(["y:", y, "x:", x, "lineWidth:", y - x].join(" "));
+                                    console.log('firstLineWidth');
                                 }
                                 firstLineWidth = toDotY > fromDotY ? -firstLineWidth : firstLineWidth;
                                 direction = false;
@@ -3189,7 +3195,7 @@
                             case 'delete':
                                 removeNode();
                                 break;
-                                //验证选项
+                            //验证选项
                             case 'validate':
                                 validate();
                                 break;
@@ -3258,9 +3264,9 @@
                                     x1: x,
                                     x2: x
                                 }, {
-                                    y1: y,
-                                    y2: y
-                                });
+                                        y1: y,
+                                        y2: y
+                                    });
                                 //console.log({ x: x, y: y });
                                 currentPath.relateDot("fromDot", x, y);
                                 $(paper).data("mod-create-line", {
