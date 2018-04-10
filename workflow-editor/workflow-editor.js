@@ -1882,9 +1882,8 @@
                                 displayType = 2;
                                 firstLineWidth = defaultFirstLineWidth;
                                 if (path.fromDot && !path.toDot) {
-
                                     fromDot = flowProps.rect[path.fromDot].node;
-                                    y = Math.abs(startNodeCenter.y - fromDot.getCenter().y);
+                                    y = Math.abs(fromDot.getCenter().y);
                                     firstLineWidth = Math.abs(firstLineWidth + y / 10);
                                     firstLineWidth = firstLineWidth > defaultFirstLineWidth ? firstLineWidth : defaultFirstLineWidth;
                                     //console.log(["y:", y, "x:", x, "lineWidth:", y - x].join(" "));
@@ -1923,12 +1922,12 @@
                                 firstLineWidth = defaultFirstLineWidth;
                                 if (path.fromDot && !path.toDot) {
                                     fromDot = flowProps.rect[path.fromDot].node;
-                                    x = Math.abs(startNodeCenter.x - fromDot.getCenter().x);
+                                    x = Math.abs(fromDot.getCenter().x);
 
                                     firstLineWidth = Math.abs(firstLineWidth + x / 10);
                                     firstLineWidth = firstLineWidth > defaultFirstLineWidth ? firstLineWidth : defaultFirstLineWidth;
-                                    console.log(["y:", y, "x:", x, "lineWidth:", y - x].join(" "));
-                                    console.log('firstLineWidth');
+                                    //console.log(["y:", y, "x:", x, "lineWidth:", y - x].join(" "));
+                                    //console.log('firstLineWidth');
                                 }
                                 firstLineWidth = toDotY > fromDotY ? -firstLineWidth : firstLineWidth;
                                 direction = false;
