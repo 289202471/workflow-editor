@@ -2359,8 +2359,11 @@
             function ondbClick(e) {
                 //使用mouseup模拟双击事件
                 //console.log(e.timeStamp);
-                var prevTimeStamp = path.prevTimeStamp || 0;
+                if (!path) {
+                    return;
+                }
 
+                var prevTimeStamp = path.prevTimeStamp || 0;
                 if (e.which === 1 && (e.timeStamp - prevTimeStamp) < 300) {
                     var fromDot, x, y;
                     console.log("path dblclick");
